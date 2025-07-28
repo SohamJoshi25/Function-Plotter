@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +18,16 @@ import javax.swing.Timer;
 public class AppRadial extends JPanel {
 
     static JSlider sliderStep;
+    static JSlider sliderA;
+    static JSlider sliderB;
+    static JSlider sliderC;
+    static JSlider sliderD;
+    static JButton resetButton;
 
+    float theta = 0;
+    float size = 4;
+    List<Point> points;    
+    Timer timer;
 
     float function(float theta){
         theta *= Math.PI/180f;
@@ -32,43 +42,32 @@ public class AppRadial extends JPanel {
 
     } 
 
-
-    float[] polarToCart(float r, float theta){
-        theta %= 360;
-        theta *= Math.PI/180;
-        return new float[]{ 
-            (float) (r * Math.cos(theta)),
-            (float) (r * Math.sin(theta))
-        };
-    }
-
-
-    
-    float theta;
-    float r;
-    
-    float size = 4;
-    List<Point> points;
-
     public AppRadial(){
-
         points = new ArrayList<>();
-        theta = 0;
-
-        float[] temp = polarToCart(r, theta);
-    
-        points.add(new Point((int)temp[0],(int)temp[1],(int)size,new Color(199, 80, 40)));
-
-        new Timer(1, e -> {
+        timer = new Timer(1, e -> {
             theta = theta + sliderStep.getValue()/1000f ;        
-            r = function(theta);
-            float[] newPoints = polarToCart(r, theta);
-            
+
+            float r = function(theta);
+            float[] newPoints = Point.polarToCart(r, theta);
             points.add(new Point((int)newPoints[0],(int)newPoints[1],(int)size,new Color(199, 80, 40)));
 
             repaint();
-        }).start();
+        });
+        timer.start();
     }
+
+    void resetAnimation() {
+        timer.stop();
+        points.clear();
+        theta = 0;
+
+        float r = function(0);
+        float[] newPoints = Point.polarToCart(r, theta);
+        points.add(new Point((int)newPoints[0],(int)newPoints[1],(int)size,new Color(199, 80, 40)));
+
+        timer.start();
+    }
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -124,37 +123,90 @@ public class AppRadial extends JPanel {
 
     static{
         sliderStep = new JSlider(0,1000,0);
+        sliderA = new JSlider(0,360,0);
+        sliderB = new JSlider(0,360,0);
+        sliderC = new JSlider(0,360,0);
+        sliderD = new JSlider(0,360,0);
+
+        resetButton = new JButton("Reset Animation");
     }
 
     public static void main(String[] args) throws Exception {
         System.out.println("Function Plotter\nRadial Coordinates");
         
+
         JFrame frame = new JFrame("Function Plotter : Radial Coordinates");
 
-        frame.getContentPane().add(new AppRadial());
+        AppRadial app = new AppRadial();
+
+        frame.getContentPane().add(app);
+        resetButton.addActionListener(e -> app.resetAnimation());
+
         frame.setSize(1200, 1200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
         JLabel labelStep = new JLabel("Step (S): " + sliderStep.getValue());
+        JLabel labelA = new JLabel("Var A (A): " + sliderA.getValue());
+        JLabel labelB = new JLabel("Var B (B): " + sliderB.getValue());
+        JLabel labelC = new JLabel("Var C (C): " + sliderC.getValue());
+        JLabel labelD = new JLabel("Var D (D): " + sliderD.getValue());
 
         // Listeners to update labels on slider release
         
         sliderStep.addChangeListener(e -> {
             labelStep.setText("Step (S): " + sliderStep.getValue());
         });
+        
+        sliderA.addChangeListener(e -> {
+            if (!sliderA.getValueIsAdjusting()) {
+                labelA.setText("Var A (A): " + sliderA.getValue());
+            }
+        });
+
+        sliderB.addChangeListener(e -> {
+            if (!sliderB.getValueIsAdjusting()) {
+                labelB.setText("Var B (B): " + sliderB.getValue());
+            }
+        });
+
+        sliderC.addChangeListener(e -> {
+            if (!sliderC.getValueIsAdjusting()) {
+                labelC.setText("Var C (C): " + sliderC.getValue());
+            }
+        });
+
+        sliderD.addChangeListener(e -> {
+            if (!sliderD.getValueIsAdjusting()) {
+                labelD.setText("Var D (D): " + sliderD.getValue());
+            }
+        });
 
         // Panel layout
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+
         controlPanel.add(labelStep);
         controlPanel.add(sliderStep);
 
+        controlPanel.add(labelA);
+        controlPanel.add(sliderA);
+        
+        controlPanel.add(labelB);
+        controlPanel.add(sliderB);
+        
+        controlPanel.add(labelC);
+        controlPanel.add(sliderC);
+        
+        controlPanel.add(labelD);
+        controlPanel.add(sliderD);
+
+        controlPanel.add(resetButton);
+
         // Add panel to bottom of frame
-        frame.add(controlPanel, BorderLayout.SOUTH);
+        frame.add(controlPanel, BorderLayout.EAST);
 
         frame.setVisible(true);
-
 
     } 
 }

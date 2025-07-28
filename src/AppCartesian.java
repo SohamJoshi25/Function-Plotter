@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,11 +21,17 @@ public class AppCartesian extends JPanel {
     static JSlider sliderW;
     static JSlider sliderDelay;
     static JSlider sliderStep;
+    static JButton resetButton;
 
     static double A = 100;
     static double W = 1;
     static double PHI = 0;
 
+    float x = 0;
+    float size = 4;
+    List<Point> points;
+    Timer timer;
+    int offset_x = 0;
 
     int function(float x){
 
@@ -54,22 +61,24 @@ public class AppCartesian extends JPanel {
        return (int)(Math.cos(W * x + PHI) * A); // Cosine Wave
     }
 
-    float x = 0;
-    float size = 4;
-    List<Point> points;
 
     public AppCartesian(){
         points = new ArrayList<>();
-
-        points.add(new Point((int)x,function(x),(int)size,Color.BLUE));
-        //points.add(new Point((int)x,function2(x),(int)size,Color.magenta));
-
-        new Timer(sliderDelay.getValue(), e -> {
+        timer = new Timer(sliderDelay.getValue(), e -> {
             x += (float)(sliderStep.getValue()/10f);        
             points.add(new Point((int)x,function(x),(int)size,Color.BLUE));
             //points.add(new Point((int)x,function2(x),(int)size,Color.magenta));
             repaint();
-        }).start();
+        });
+        timer.start();
+    }
+    
+    void resetAnimation() {
+        timer.stop();
+        points.clear();
+        x = 0;
+        points.add(new Point((int)x,function(x),(int)size,Color.BLUE));
+        timer.start();
     }
 
     @Override
@@ -93,9 +102,8 @@ public class AppCartesian extends JPanel {
         g2d.setColor(Color.BLACK);
         g2d.drawLine(0, -h / 2, 0, h / 2); // vertical
 
-        g2d.setColor(Color.RED);
+
         for (int i = 0; i <= h / 2; i += 100) {
-            
             g2d.scale(1, -1);
             g2d.drawString(Integer.toString(i), 0, i);
             g2d.scale(1, -1);
@@ -120,37 +128,24 @@ public class AppCartesian extends JPanel {
             g2d.fillOval(i - 2, -2, 4, 4);
         }
 
-
-        g2d.setColor(new Color(60, 60, 60));
-        for (int i = -w / 2; i <= w / 2; i += 100) {
-            g2d.drawLine(i, -h / 2, i, h / 2);
-        }
-        for (int i = -h / 2; i <= h / 2; i += 100) {
-            g2d.drawLine(-w / 2, i, w / 2, i);
-        }
-
-
-        if(x>w/2){
-            x = -w/2;
+        if(x+offset_x > w/2){
+            offset_x -= w;
             points.clear();
         }
 
         for(Point point:points){
-
             g2d.setColor(point.color);
-            g2d.fillOval(point.x, point.y, point.size, point.size);
-        
+            g2d.fillOval(point.x + offset_x, point.y, point.size, point.size);
         }
-        
-
     }
 
     static{
         sliderA = new JSlider(0, 1000, (int)A);
         sliderPHI = new JSlider(0, 100, (int)PHI * 100);
         sliderW = new JSlider(0, 1000, (int)W * 100);
-        sliderDelay = new JSlider(0,10000,1);
+        sliderDelay = new JSlider(0,10000,0);
         sliderStep = new JSlider(0,100,0);
+        resetButton = new JButton("Reset Animation");
     }
 
     public static void main(String[] args) throws Exception {
@@ -159,7 +154,12 @@ public class AppCartesian extends JPanel {
         
         JFrame frame = new JFrame("Function Plotter : Cartesian Coordinates");
 
-        frame.getContentPane().add(new AppCartesian());
+
+        AppCartesian app = new AppCartesian();
+
+        frame.getContentPane().add(app);
+        resetButton.addActionListener(e -> app.resetAnimation());
+
         frame.setSize(1200, 1200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -202,20 +202,25 @@ public class AppCartesian extends JPanel {
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
         controlPanel.add(labelA);
         controlPanel.add(sliderA);
+
         controlPanel.add(labelPHI);
         controlPanel.add(sliderPHI);
+
         controlPanel.add(labelW);
         controlPanel.add(sliderW);
+
         controlPanel.add(labelDelay);
         controlPanel.add(sliderDelay);
+
         controlPanel.add(labelStep);
         controlPanel.add(sliderStep);
 
+        controlPanel.add(resetButton);
+
         // Add panel to bottom of frame
-        frame.add(controlPanel, BorderLayout.SOUTH);
+        frame.add(controlPanel, BorderLayout.EAST);
 
         frame.setVisible(true);
-
 
     } 
 }
