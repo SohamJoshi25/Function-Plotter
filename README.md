@@ -10,8 +10,8 @@ A Java-based application to visualize mathematical curves in **Cartesian** and *
 
 | Curve Name            | Graph Preview                        | Formula Used                                  |
 |----------------------|--------------------------------------|-----------------------------------------------|
-| **Sine Wave**         | ![Sine](./public/cartesian/sine_cosine.png)       | `Math.sin(W * x + PHI) * A`                    |
-| **Cosine Wave**       | ![Cosine](./public/cartesian/sine_cosine.png)     | `Math.cos(W * x + PHI) * A`                    |
+| **Sine Wave (Blue)**         | ![Sine](./public/cartesian/sine_cosine.png)       | `Math.sin(W * x + PHI) * A`                    |
+| **Cosine Wave (Magenta)**       | ![Cosine](./public/cartesian/sine_cosine.png)     | `Math.cos(W * x + PHI) * A`                    |
 | **Tangent Wave**      | ![Tangent](./public/cartesian/tangent.png)        | `Math.tan(W * x + PHI) * A * 0.1`              |
 | **Triangle Wave**     | ![Triangle](./public/cartesian/triangle_wave.png) | `2 * A / π * asin(sin(W * x + PHI))`          |
 | **Damped Sine**       | ![Damped](./public/cartesian/damped_sine.png)     | `sin(W * x + PHI) * exp(-0.01 * x) * A`        |
