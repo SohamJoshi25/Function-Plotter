@@ -59,7 +59,6 @@ public class AppCartesian extends JPanel {
     List<Point> points;
 
     public AppCartesian(){
-
         points = new ArrayList<>();
 
         points.add(new Point((int)x,function(x),(int)size,Color.BLUE));
