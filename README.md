@@ -44,7 +44,7 @@ A Java-based application to visualize mathematical curves in **Cartesian** and *
 | **Lissajous Curve**      | ![Lissajous](./public/parametric/Lissajous.png) | `x = A·sin(W·t + φ)`  <br> `y = A·sin(2·W·t)`                              |
 | **Parametric Archimedean Spiral** | ![Archimedean](./public/parametric/parametric_archimedial.png) | `x = (t/30)·cos(W·t)` <br> `y = (t/30)·sin(W·t)`                     |
 | **Hypotrochoid**         | ![Hypotrochoid](./public/parametric/Hypotrochoid.png) | `x = (A - 20)·cos(W·t) + 40·cos(((A - 20)/20)·W·t)` <br> `y = (A - 20)·sin(W·t) - 40·sin(((A - 20)/20)·W·t)` |
-| **Helix (3D)**           | ![Helix (3D)](./public/parametric/3DParametric.mp4) | `x = A·cos(W·t)` <br> `y = A·sin(W·t)` <br> `z = t`                        |
+| **Helix (3D)**           | ![Helix (3D)](./public/parametric/3DParametric.mov) | `x = A·cos(W·t)` <br> `y = A·sin(W·t)` <br> `z = t`                        |
 
 
 ---
