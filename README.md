@@ -49,19 +49,19 @@ A Java-based application to visualize mathematical curves in **Cartesian** and *
 
 ---
 
----
-
-### ♾️ Mandelbrot Fractal
+### ♾️ Mandelbrot Fractal (`AppFractal.java`)
 
 - `c = x + iy  (a point in the complex plane)`
 - `z₀ = 0`
 - `Recurrence:  zₙ₊₁ = zₙ² + c`
 
-![mandelbrot 1](./public/fractal/mandelbrot.png)<br>
-![mandelbrot 2](./public/fractal/mandelbrot2.png)<br>
-![mandelbrot 3](./public/fractal/mandelbrot3.png)<br>
-![mandelbrot 4](./public/fractal/mandelbrot4.png)<br>
-![mandelbrot 5](./public/fractal/mandelbrot5.png)<br>
+| Location        | Preview                                     |
+|-------------------|---------------------------------------------|
+| **Overview**        | ![mandelbrot 1](./public/fractal/mandelbrot.png)     |
+| **Left Zoom**        | ![mandelbrot 2](./public/fractal/mandelbrot2.png)    |
+| **Left**        | ![mandelbrot 3](./public/fractal/mandelbrot3.png)    |
+| **Center**        | ![mandelbrot 4](./public/fractal/mandelbrot4.png)    |
+| **Bottom**        | ![mandelbrot 5](./public/fractal/mandelbrot5.png)    |
 
 ---
 
