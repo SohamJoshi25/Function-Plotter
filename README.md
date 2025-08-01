@@ -49,17 +49,26 @@ A Java-based application to visualize mathematical curves in **Cartesian** and *
 
 ---
 
+---
 
-## 🎛️ Controls
+### ♾️ Mandelbrot Fractal
+
+- `c = x + iy  (a point in the complex plane)`
+- `z₀ = 0`
+- `Recurrence:  zₙ₊₁ = zₙ² + c`
+
+![mandelbrot 1](./public/fractal/mandelbrot.png)<br>
+![mandelbrot 2](./public/fractal/mandelbrot2.png)<br>
+![mandelbrot 3](./public/fractal/mandelbrot3.png)<br>
+![mandelbrot 4](./public/fractal/mandelbrot4.png)<br>
+![mandelbrot 5](./public/fractal/mandelbrot5.png)<br>
+
+---
+
+
+### 🎛️ Controls
 
 The app provides interactive **sliders** to dynamically update curves:
-
-- **Amplitude (A):** Controls the wave height.
-- **Phase (PHI):** Controls horizontal shift.
-- **Frequency (W):** Controls wave compression/stretch.
-- **Delay (D):** Time delay between redraws (animation speed).
-- **Step (S):** How far `x` moves per frame.
----
 
 ### Example Usage in Code
 
