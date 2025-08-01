@@ -33,7 +33,6 @@ A Java-based application to visualize mathematical curves in **Cartesian** and *
 | **Epicycloid**        | ![Epicycloid](./public/radial/epicycloid.png)   | `100 * (1 - cos(3θ))`                         |
 | **Logarithmic Spiral**| ![Log](./public/radial/log.png)                | `10 * e^(0.15 * θ)`                           |
 
----
 
 ---
 
